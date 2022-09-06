@@ -1,0 +1,22 @@
+{% extends "blog/base.html" %}
+
+{% load static %}
+{% block content %}
+    <main>
+      <h2>fewfewfwef</h2>
+        {% for post in posts%}
+        {{post.image}}
+        <div class="card" style="width: 18rem;">
+          <img src="{% static 'blog/images/drizzle.jpg' %}" class="card-img-top" alt="image">
+          <div class="card-body">
+            <h5 class="card-title"> {{post.title}}</h5>
+            <p class="card-text"> {{post.content}}</p>
+            <a href="#" class="btn btn-primary">More Detail</a>
+          </div>
+        </div>
+        {% comment %} <a href="{% url 'detail' post.id  %}">
+        <li>{{ student.number }} - {{student.first_name}} {{student.last_name}}</li>
+        <a> {% endcomment %}
+        {%endfor%}
+        </main>
+{% endblock content %}
