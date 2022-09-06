@@ -1,4 +1,4 @@
-{% extends "blog/base.html" %} {% load static %} {% block content %}
+{% extends "blog/base.html" %} {% load static %} {% block container%}
 <main
   class="d-flex flex-wrap justify-content-center align-items-center gap-5 my-5"
 >
@@ -9,13 +9,18 @@
       <h5 class="card-title">{{post.title}}</h5>
       <p class="card-text">{{post.content}}</p>
     </div>
-    <div class="d-flex justify-content-around py-2">
-      <a href="#" class="btn btn-primary w-25">Edit</a>
+    <div class="d-flex justify-content-start gap-5 py-3 px-3 bg-light">
+      <i class="fa-regular fa-heart btn"></i>
+      <i class="fa-solid fa-eye btn"></i>
+      <i class="fa-regular fa-message btn"></i>
+
+      {% comment %} <a href="#" class="btn btn-primary w-25">Edit</a>
       <a href="#" class="btn btn-success w-25">Comment</a>
-      <a href="#" class="btn btn-danger w-25">Delete</a>
+      <a href="#" class="btn btn-danger w-25">Delete</a> {% endcomment %}
     </div>
+    <p class="px-3 bg-light">{{post.publish_date}}</p>
   </div>
 
   {%endfor%}
 </main>
-{% endblock content %}
+{% endblock container%}

@@ -1,0 +1,16 @@
+{% extends 'blog/base.html' %} {% block container %}
+<main
+  class="container d-flex flex-column align-items-center gap-2 my-4 w-100 justify-content-center border border-danger"
+>
+  <h2>Add Blog Post</h2>
+  <form
+    action=""
+    method="POST"
+    enctype="multipart/form-data"
+    class="d-flex flex-column align-items-start gap-2 mx-auto"
+  >
+    {% csrf_token %} {{form}}
+    <input type="submit" value="Add" class="btn btn-primary" />
+  </form>
+</main>
+{% endblock container %}
