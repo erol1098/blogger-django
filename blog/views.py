@@ -1,4 +1,6 @@
+from http.client import HTTPResponse
 from django.shortcuts import render,redirect
+from django.http import HttpResponse
 
 from .forms import PostForm
 from .models import Post
@@ -43,3 +45,16 @@ def post_update(request,id):
   ctx = {"form":form}
   
   return render(request, "blog/post_update.html", ctx)
+
+
+
+def post_delete(request, id):
+  post = Post.objects.get(id=id)
+  if request.method == "POST":
+    post.delete()
+    return redirect("index")
+
+  posts = Post.objects.all()
+  ctx = {"posts":posts}
+  
+  return render(request,"blog/post_delete.html",ctx)
