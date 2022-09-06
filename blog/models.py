@@ -15,8 +15,8 @@ class Category(models.Model):
 
 class Post(models.Model):
   title = models.CharField("Title", max_length=64)
-  content = models.TextField("Content")
-  image = models.ImageField(upload_to='media/blog_pics')
+  content = models.TextField("Content",)
+  image = models.ImageField(upload_to='images/blog',)
   publish_date = models.DateTimeField(auto_now_add=True, null=True)
   last_updated = models.DateTimeField(auto_now=True)
   status = models.CharField("Status", max_length=2, null=True)
