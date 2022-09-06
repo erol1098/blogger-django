@@ -28,3 +28,18 @@ def post_create(request):
   return render(request, "blog/post_create.html", ctx)
 
 
+def post_update(request,id):
+
+  post = Post.objects.get(id=id)
+  print(post)
+  form = PostForm(instance=post)
+
+  if request.method == "POST":
+    form = PostForm(request.POST, request.FILES, instance=post)
+    if form.is_valid():
+      form.save()
+      return redirect("index")
+
+  ctx = {"form":form}
+  
+  return render(request, "blog/post_update.html", ctx)
