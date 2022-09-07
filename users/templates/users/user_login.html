@@ -1,0 +1,19 @@
+{% extends 'users/base.html' %} {% block container %}
+<main class="container d-flex flex-column align-items-center py-3">
+  <h2>Login</h2>
+  {% if request.user.is_authenticated %}
+
+  <h3>You are already logged in!</h3>
+
+  {% else %}
+
+  <form
+    class="d-flex flex-column gap-2 p-3 my-3 border shadow-1 w-50"
+    action="{% url 'user_login' %}"
+    method="post"
+  >
+    {% csrf_token %} {{form}}
+    <button type="submit" class="btn btn-success my-2">Login</button>
+  </form>
+</main>
+{% endif %} {% endblock container %}

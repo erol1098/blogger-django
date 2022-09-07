@@ -1,0 +1,22 @@
+{% extends 'blog/base.html' %} {% block container %}
+
+<main class="container d-flex flex-column align-items-center py-3">
+  <h2>Register</h2>
+
+  {% if request.user.is_authenticated %}
+
+  <h3>Thanks for registering</h3>
+
+  {% else %}
+
+  <form
+    class="d-flex flex-column gap-2 p-3 my-3 border shadow-1 w-50"
+    action=""
+    method="post"
+    enctype="multipart/form-data"
+  >
+    {% csrf_token %} {{ form}}
+    <button type="submit" class="btn btn-primary my-2">Register</button>
+  </form>
+  {% endif %} {% endblock container %}
+</main>
