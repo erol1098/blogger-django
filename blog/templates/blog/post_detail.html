@@ -1,47 +1,48 @@
 {% extends "blog/base.html" %} {% block container%}
-<main class="d-flex justify-content-center align-items-center gap-5 my-5">
-  <div class="card" style="width: 25rem; height: 40rem">
-    <img src="{{post.image.url}}" class="card-img-top" alt="image" />
-    <div class="card-body overflow-auto">
-      <h5 class="card-title">{{post.title}}</h5>
-      <p class="card-text">{{post.content}}</p>
-    </div>
-    <div class="d-flex justify-content-start gap-5 py-3 px-3 bg-light">
-      <i class="fa-regular fa-heart btn"></i>
-      <i class="fa-solid fa-eye btn"></i>
-      <i class="fa-regular fa-message btn"></i>
-    </div>
-    <div class="d-flex justify-content-start gap-5 py-3 px-3 bg-light">
-      <a href="/update/{{post.id}}" class="btn btn-primary w-25">Edit</a>
-      <a href="#" class="btn btn-success w-25">Comment</a>
-      <a href="/delete/{{post.id}}" class="btn btn-danger w-25">Delete</a>
-    </div>
-
-    <p class="px-3 bg-light">{{post.publish_date}}</p>
+<main class="container">
+  <section class="d-flex flex-column align-items-center my-5 p-5 border shadow">
+    <h1 class="title">{{ post.title }}</h1>
     <hr />
-    <form>
-      {{form}}
-      <div class="mb-3">
-        <label for="title" class="form-label">Title</label>
-        <input type="text" class="form-control" id="title" />
+    <div class="w-100 d-flex justify-content-between">
+      <span><b>Category: </b> {{ post.category }}</span>
+      <div class="d-flex gap-3">
+        <i class="fa-regular fa-heart btn"></i>
+        <i class="fa-solid fa-eye btn"></i>
+        <i class="fa-regular fa-message btn"></i>
+        <span>{{ post.publish_date|timesince }} ago</span>
       </div>
-      <div class="mb-3">
-        <label for="comment" class="form-label">Comment</label>
-        <textarea
-          class="form-control"
-          name="comment"
-          id="comment"
-          cols="30"
-          rows="7"
-          autofocus
-        ></textarea>
+    </div>
+    <hr />
+    <p class="">{{ post.content }}</p>
+
+    {% if post.image %}
+    <figure class="img-thumbnail">
+      <img src="{{ post.image.url }}" width="100%" />
+    </figure>
+    {% endif %}
+    <hr />
+
+    <h2>Comments</h2>
+
+    <form method="POST" class="mb-6">
+      {% csrf_token %} {{ form.as_p }}
+
+      <div class="field">
+        <div class="control">
+          <button class="button is-success">Submit comment</button>
+        </div>
       </div>
-      <div class="mb-3 form-check">
-        <input type="checkbox" class="form-check-input" id="exampleCheck1" />
-        <label class="form-check-label" for="exampleCheck1">Check me out</label>
-      </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
     </form>
-  </div>
+
+    {% comment %} {% for comment in post.comment.all %}
+    <article class="media box">
+      <div class="media-content">
+        <strong>{{ comment.name }}</strong>
+        <small>{{ comment.time_stamp|timesince }} ago</small><br />
+        {{ comment.content }}
+      </div>
+    </article>
+    {% endfor %} {% endcomment %}
+  </section>
 </main>
 {% endblock container%}

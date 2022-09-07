@@ -63,13 +63,17 @@ def post_delete(request, id):
 
 def post_detail(request,id):
   post = Post.objects.get(id=id)
-  commentForm = CommentForm()
+  form = CommentForm()
+
   if request.method =="POST":
     form = CommentForm(request.POST)
-    if form.is_valid():
-      form.save()
-      form.clean()
 
-  ctx = {"post":post,"form":commentForm}
+    if form.is_valid():
+      comment = form.save(commit=False)
+      comment.post = post
+      comment.save()
+      # return redirect("detail")  
+
+  ctx = {"post":post,"form":form}
   
   return render(request, "blog/post_detail.html", ctx)
