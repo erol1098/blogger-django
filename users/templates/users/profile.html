@@ -1,0 +1,15 @@
+{% extends "blog/base.html" %} {% block container %}
+<main class="container d-flex flex-column align-items-center py-3">
+  <h1>This is the profile page for {{user.username}}</h1>
+
+  <form
+    class="d-flex flex-column gap-2 p-3 my-3 border shadow-1 w-75"
+    enctype="multipart/form-data"
+    action=""
+    method="POST"
+  >
+    {% csrf_token %} {{form}}
+    <button type="submit" class="btn btn-outline-info my-2">Update</button>
+  </form>
+</main>
+{% endblock container %}

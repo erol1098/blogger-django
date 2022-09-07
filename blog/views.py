@@ -34,7 +34,6 @@ def post_create(request):
 def post_update(request,id):
 
   post = Post.objects.get(id=id)
-  print(post)
   form = PostForm(instance=post)
 
   if request.method == "POST":

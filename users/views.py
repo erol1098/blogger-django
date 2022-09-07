@@ -1,6 +1,9 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+
+from users.forms import ProfileForm, UserForm
 
 # Create your views here.
 
@@ -48,11 +51,23 @@ def register(request):
     
     return render(request, "users/register.html", ctx)
 
-
+@login_required(login_url='/user/login/')
 def user_logout(request):
     # messages.success(request,'You logged out!')
   logout(request)
 #   return redirect("index")
   return render(request, "users/logout.html")
 
-  
+@login_required(login_url='/user/login/') 
+def profile(request):
+    profileForm = ProfileForm()
+
+    if request.method == "POST":
+        profileForm = ProfileForm(request.POST, request.FILES, )
+        if profileForm.is_valid():
+            profileForm.save()
+            return redirect("/user/profile")
+
+    ctx = {"form":profileForm,}
+    
+    return render(request, "users/profile.html", ctx)
