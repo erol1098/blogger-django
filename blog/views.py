@@ -2,7 +2,7 @@ from http.client import HTTPResponse
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 
-from .forms import PostForm
+from .forms import CommentForm, PostForm
 from .models import Post
 # Create your views here.
 
@@ -58,3 +58,18 @@ def post_delete(request, id):
   ctx = {"posts":posts}
   
   return render(request,"blog/post_delete.html",ctx)
+
+
+
+def post_detail(request,id):
+  post = Post.objects.get(id=id)
+  commentForm = CommentForm()
+  if request.method =="POST":
+    form = CommentForm(request.POST)
+    if form.is_valid():
+      form.save()
+      form.clean()
+
+  ctx = {"post":post,"form":commentForm}
+  
+  return render(request, "blog/post_detail.html", ctx)
