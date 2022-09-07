@@ -4,9 +4,11 @@
   <p>user id :{{user.id}}</p>
   <p>post author id :{{post.author.id}}</p>
   {% endcomment %}
-  <section class="d-flex flex-column align-items-center my-5 p-5 border shadow">
-    <h1 class="title">{{ post.title }}</h1>
-    <div class="w-100 d-flex justify-content-between">
+  <section
+    class="d-flex flex-column align-items-center gap-3 my-5 p-5 border shadow"
+  >
+    <h1 class="title px-4">{{ post.title }}</h1>
+    <div class="w-100 d-flex justify-content-between px-5">
       <span><b>Category: </b> {{ post.category }}</span>
 
       <div class="d-flex gap-3">
@@ -15,14 +17,14 @@
           <a href="/delete/{{post.id}}" class="btn btn-danger">Delete</a>
         </div>
 
-        <i class="fa-regular fa-heart btn"></i>
-        <i class="fa-solid fa-eye btn"></i>
-        <i class="fa-regular fa-message btn"></i>
+        <i class="fa-regular fa-heart fa-xl btn"></i>
+        <i class="fa-solid fa-eye fa-xl btn"></i>
+        <i class="fa-regular fa-message fa-xl btn"></i>
         <span>{{ post.publish_date|timesince }} ago</span>
       </div>
     </div>
     <hr />
-    <p class="">{{ post.content }}</p>
+    <p class="text-start px-4">{{ post.content }}</p>
 
     {% if post.image %}
     <figure class="img-thumbnail">
@@ -45,7 +47,8 @@
 
     <article class="card w-75 my-2">
       <div class="card-header d-flex justify-content-between">
-        <strong>{{ comment.name }}</strong
+        <strong>{{ comment.name }}</strong>
+        <em>added by {{comment.author}}</em
         ><small>{{ comment.time_stamp|timesince }} ago</small>
       </div>
 

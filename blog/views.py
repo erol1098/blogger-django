@@ -73,6 +73,7 @@ def post_detail(request,id):
     if form.is_valid():
       comment = form.save(commit=False)
       comment.post = post
+      comment.author = request.user
       comment.save()
       return redirect(f"/detail/{id}")  
 
