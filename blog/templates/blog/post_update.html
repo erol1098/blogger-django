@@ -1,16 +1,14 @@
 {% extends 'blog/base.html' %} {% block container %}
-<main
-  class="container d-flex flex-column align-items-center gap-2 my-4 w-100 justify-content-center border border-danger"
->
+<main class="container d-flex flex-column align-items-center py-3">
   <h2>Update Blog Post</h2>
   <form
     action=""
     method="POST"
     enctype="multipart/form-data"
-    class="d-flex flex-column align-items-start gap-2 mx-auto"
+    class="d-flex flex-column gap-2 p-3 my-3 border shadow-1 w-75"
   >
     {% csrf_token %} {{form}}
-    <input type="submit" value="Update" class="btn btn-primary" />
+    <input type="submit" value="Update" class="btn btn-primary my-2" />
   </form>
 </main>
 {% endblock container %}

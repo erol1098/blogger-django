@@ -1,6 +1,4 @@
-from http.client import HTTPResponse
 from django.shortcuts import render,redirect
-from django.http import HttpResponse
 
 from .forms import CommentForm, PostForm
 from .models import Post
@@ -40,6 +38,7 @@ def post_update(request,id):
     form = PostForm(request.POST, request.FILES, instance=post)
     if form.is_valid():
       form.save()
+      
       return redirect("index")
 
   ctx = {"form":form}
@@ -72,7 +71,8 @@ def post_detail(request,id):
       comment = form.save(commit=False)
       comment.post = post
       comment.save()
-      # return redirect("detail")  
+      form.clean()
+      return redirect(f"/detail/{id}")  
 
   ctx = {"post":post,"form":form}
   

@@ -21,28 +21,30 @@
     </figure>
     {% endif %}
     <hr />
+    <h2 class="w-75 text-start my-2">Leave A Comment...</h2>
 
-    <h2>Comments</h2>
-
-    <form method="POST" class="mb-6">
-      {% csrf_token %} {{ form.as_p }}
-
-      <div class="field">
-        <div class="control">
-          <button class="button is-success">Submit comment</button>
-        </div>
-      </div>
+    <form
+      method="POST"
+      class="d-flex flex-column gap-2 p-3 my-3 border shadow-1 w-75"
+    >
+      {% csrf_token %} {{ form}}
+      <button class="btn btn-primary my-2">Submit comment</button>
     </form>
+    <h2 class="w-75 text-start my-2">Comments</h2>
 
-    {% comment %} {% for comment in post.comment.all %}
-    <article class="media box">
-      <div class="media-content">
-        <strong>{{ comment.name }}</strong>
-        <small>{{ comment.time_stamp|timesince }} ago</small><br />
-        {{ comment.content }}
+    {% for comment in post.comments.all %}
+
+    <article class="card w-75 my-2">
+      <div class="card-header d-flex justify-content-between">
+        <strong>{{ comment.name }}</strong
+        ><small>{{ comment.time_stamp|timesince }} ago</small>
+      </div>
+
+      <div class="card-body">
+        <p>{{ comment.content }}</p>
       </div>
     </article>
-    {% endfor %} {% endcomment %}
+    {% endfor %}
   </section>
 </main>
 {% endblock container%}
