@@ -1,13 +1,20 @@
 {% extends "blog/base.html" %} {% block container%}
 <main class="container">
+  {% comment %}
+  <p>user id :{{user.id}}</p>
+  <p>post author id :{{post.author.id}}</p>
+  {% endcomment %}
   <section class="d-flex flex-column align-items-center my-5 p-5 border shadow">
     <h1 class="title">{{ post.title }}</h1>
-    <hr />
     <div class="w-100 d-flex justify-content-between">
       <span><b>Category: </b> {{ post.category }}</span>
+
       <div class="d-flex gap-3">
-        <a href="/update/{{post.id}}" class="btn btn-primary">Edit</a>
-        <a href="/delete/{{post.id}}" class="btn btn-danger">Delete</a>
+        <div class="{% if user.id != post.author.id %} invisible{% endif %}">
+          <a href="/update/{{post.id}}" class="btn btn-primary">Edit</a>
+          <a href="/delete/{{post.id}}" class="btn btn-danger">Delete</a>
+        </div>
+
         <i class="fa-regular fa-heart btn"></i>
         <i class="fa-solid fa-eye btn"></i>
         <i class="fa-regular fa-message btn"></i>
