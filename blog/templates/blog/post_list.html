@@ -3,25 +3,45 @@
   class="d-flex flex-wrap justify-content-center align-items-center gap-5 my-5"
 >
   {% for post in posts%}
-  <div class="card" style="width: 25rem; height: 40rem">
+  <section class="card" style="width: 25rem; height: 35rem">
     <img src="{{post.image.url}}" class="card-img-top" alt="image" />
-    <div class="card-body overflow-auto">
+    <div class="card-body">
       <h5 class="card-title">{{post.title}}</h5>
-      <p class="card-text">{{post.content}}</p>
+      <hr />
+      <div class="d-flex justify-content-between">
+        <span><b>Category: </b> {{ post.category }}</span>
+        <div class="d-flex justify-content-between gap-4">
+          <i class="fa-solid fa-eye"></i>
+          <i class="fa-regular fa-heart"></i>
+          <i class="fa-regular fa-message"></i>
+        </div>
+      </div>
+      <hr />
+      <p
+        class="card-text"
+        style="
+          overflow: hidden;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          max-height: 3.2rem;
+        "
+      >
+        {{post.content}}
+      </p>
+      <p class="card-text text-end">
+        <small class="text-muted"
+          >Last updated {{post.last_updated|timesince}} ago</small
+        >
+      </p>
     </div>
-    <div class="d-flex justify-content-start gap-5 py-3 px-3 bg-light">
-      <i class="fa-regular fa-heart btn"></i>
-      <i class="fa-solid fa-eye btn"></i>
-      <i class="fa-regular fa-message btn"></i>
-    </div>
+
     <div class="d-flex justify-content-start gap-5 py-3 px-3 bg-light">
       <a href="/update/{{post.id}}" class="btn btn-primary w-25">Edit</a>
       <a href="/detail/{{post.id}}" class="btn btn-success w-25">Detail</a>
       <a href="/delete/{{post.id}}" class="btn btn-danger w-25">Delete</a>
     </div>
-
-    <p class="px-3 bg-light">{{post.publish_date}}</p>
-  </div>
+  </section>
 
   {%endfor%}
 </main>
