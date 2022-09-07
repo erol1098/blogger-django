@@ -2,7 +2,7 @@
 <main
   class="d-flex flex-wrap justify-content-center align-items-center gap-5 my-5"
 >
-  {% for post in posts%}
+  {% if posts %} {% for post in posts%}
   <section class="card" style="width: 25rem; height: 35rem">
     <img src="{{post.image.url}}" class="card-img-top" alt="image" />
     <div class="card-body">
@@ -41,6 +41,6 @@
     </div>
   </section>
 
-  {%endfor%}
+  {%endfor%} {% endif %}
 </main>
 {% endblock container%}

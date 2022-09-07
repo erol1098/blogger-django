@@ -20,8 +20,10 @@ def post_create(request):
   if request.method == "POST":
     form = PostForm(request.POST, request.FILES)
     if form.is_valid():
-      print(request.POST)
-      form.save()
+      
+      post = form.save(commit=False)
+      post.author = request.user
+      post.save()
       return redirect("index")
 
   ctx = {"form":form}
@@ -72,7 +74,6 @@ def post_detail(request,id):
       comment = form.save(commit=False)
       comment.post = post
       comment.save()
-      form.clean()
       return redirect(f"/detail/{id}")  
 
   ctx = {"post":post,"form":form}
