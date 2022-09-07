@@ -51,5 +51,8 @@ def register(request):
 
 def user_logout(request):
     # messages.success(request,'You logged out!')
-    logout(request)
-    return redirect('index')
+  logout(request)
+#   return redirect("index")
+  return render(request, "users/logout.html")
+
+  

@@ -6,6 +6,8 @@
     <div class="w-100 d-flex justify-content-between">
       <span><b>Category: </b> {{ post.category }}</span>
       <div class="d-flex gap-3">
+        <a href="/update/{{post.id}}" class="btn btn-primary">Edit</a>
+        <a href="/delete/{{post.id}}" class="btn btn-danger">Delete</a>
         <i class="fa-regular fa-heart btn"></i>
         <i class="fa-solid fa-eye btn"></i>
         <i class="fa-regular fa-message btn"></i>

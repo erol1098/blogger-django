@@ -60,13 +60,11 @@
             >
 
             {% else %}
-            <button
-              class="btn btn-outline-info"
-              type="button"
-              href="{% url 'logout' %}"
+            <a href="{% url 'logout' %}">
+              <button class="btn btn-outline-info" type="button">
+                Logout
+              </button></a
             >
-              Logout
-            </button>
             {% endif %}
           </div>
         </div>
@@ -78,11 +76,6 @@
       integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
       crossorigin="anonymous"
     ></script>
-    <script>
-      document.addEventListener('DOMContentLoaded', (event) => {
-        var myModal = new bootstrap.Modal(document.getElementById('popup'));
-        myModal.show();
-      });
-    </script>
+    <script src={% static 'blog/js/app.js' %}></script>
   </body>
 </html>

@@ -1,4 +1,5 @@
 from django.shortcuts import render,redirect
+from django.contrib.auth.decorators import login_required
 
 from .forms import CommentForm, PostForm
 from .models import Post
@@ -11,7 +12,7 @@ def post_list(request):
 
   return render(request, "blog/post_list.html", ctx)
 
-
+@login_required(login_url='/user/login/')
 def post_create(request):
 
   form = PostForm()
@@ -27,7 +28,7 @@ def post_create(request):
   
   return render(request, "blog/post_create.html", ctx)
 
-
+@login_required(login_url='/user/login/')
 def post_update(request,id):
 
   post = Post.objects.get(id=id)
@@ -46,7 +47,7 @@ def post_update(request,id):
   return render(request, "blog/post_update.html", ctx)
 
 
-
+@login_required(login_url='/user/login/')
 def post_delete(request, id):
   post = Post.objects.get(id=id)
   if request.method == "POST":
@@ -59,7 +60,7 @@ def post_delete(request, id):
   return render(request,"blog/post_delete.html",ctx)
 
 
-
+@login_required(login_url='/user/login/')
 def post_detail(request,id):
   post = Post.objects.get(id=id)
   form = CommentForm()
