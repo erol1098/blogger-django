@@ -1,8 +1,9 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import  User
 
 from .forms import CommentForm, PostForm
-from .models import Post
+from .models import Post, PostView
 # Create your views here.
 
 def post_list(request):
@@ -14,7 +15,7 @@ def post_list(request):
 
 @login_required(login_url='/user/login/')
 def post_create(request):
-
+  user = User.objects.get(id=request.user.id)
   form = PostForm()
 
   if request.method == "POST":
@@ -22,8 +23,9 @@ def post_create(request):
     if form.is_valid():
       
       post = form.save(commit=False)
-      post.author = request.user
+      post.author = user
       post.save()
+    
       return redirect("index")
 
   ctx = {"form":form}
@@ -63,8 +65,15 @@ def post_delete(request, id):
 
 @login_required(login_url='/user/login/')
 def post_detail(request,id):
+  user = User.objects.get(id=request.user.id)
   post = Post.objects.get(id=id)
   form = CommentForm()
+
+  pw = PostView(viewer=user, post=post)
+  pw.save()
+  
+  query = PostView.objects.filter(post=post)
+  viewCount = len(query)
 
   if request.method =="POST":
     form = CommentForm(request.POST)
@@ -76,6 +85,7 @@ def post_detail(request,id):
       comment.save()
       return redirect(f"/detail/{id}")  
 
-  ctx = {"post":post,"form":form}
+
+  ctx = {"post":post,"form":form, "viewCount":viewCount}
   
   return render(request, "blog/post_detail.html", ctx)
