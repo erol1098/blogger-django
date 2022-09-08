@@ -79,6 +79,16 @@
         </div>
       </div>
     </nav>
+    {% if messages %}
+    {% for message in messages %}
+    {% if message.tags == "error" %}
+    <div class="alert alert-danger">{{ message }}</div>
+    {% else %}
+    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+   
     {% block container %}{% endblock container %}
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"

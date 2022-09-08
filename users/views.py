@@ -1,10 +1,11 @@
 from django.shortcuts import render,redirect
-from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
-from users.forms import ProfileForm, UserForm
+from users.forms import CreateUserForm, ProfileForm, UpdateUserProfileForm
 
+from django.contrib import messages
 # Create your views here.
 
 def user_login(request):
@@ -17,17 +18,16 @@ def user_login(request):
         user = authenticate(username=username, password=password)
 
         if user:
-            # messages.success(request, "Login Successfull")
+            messages.success(request, "Login Successfull")
             login(request,user)
             return redirect('index')
-
+ 
     return render(request, 'users/user_login.html', {"form":form})
 
 def register(request):
     
     if request.method == 'POST':
-      
-        form = UserCreationForm(request.POST)
+        form = CreateUserForm(request.POST)
 
         if form.is_valid():
             form.save()
@@ -43,7 +43,8 @@ def register(request):
             return redirect('index')
             
     else:
-        form = UserCreationForm()
+        form = CreateUserForm()
+
     
     ctx = {
         'form': form
@@ -53,21 +54,27 @@ def register(request):
 
 @login_required(login_url='/user/login/')
 def user_logout(request):
-    # messages.success(request,'You logged out!')
-  logout(request)
-#   return redirect("index")
-  return render(request, "users/logout.html")
+    messages.success(request,'You logged out!')
+    logout(request)
+    return render(request, "users/logout.html")
 
 @login_required(login_url='/user/login/') 
 def profile(request):
-    profileForm = ProfileForm()
+    user = request.user
+    profileForm = ProfileForm(instance=user)
+    form = UpdateUserProfileForm(instance=user)
 
     if request.method == "POST":
-        profileForm = ProfileForm(request.POST, request.FILES, )
-        if profileForm.is_valid():
-            profileForm.save()
-            return redirect("/user/profile")
+        profileForm = ProfileForm(request.POST, request.FILES,instance=user)
+        form = UpdateUserProfileForm(request.POST, request.FILES,instance=user)
 
-    ctx = {"form":profileForm,}
+        if profileForm.is_valid():
+            profile1 = profileForm.save(commit=False)
+            profile1.user = user
+            if form.is_valid():
+                form.save()
+                return redirect("/user/profile")
+
+    ctx = {"form":profileForm, "form1":form}
     
     return render(request, "users/profile.html", ctx)

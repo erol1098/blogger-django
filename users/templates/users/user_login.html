@@ -12,7 +12,11 @@
     action="{% url 'user_login' %}"
     method="post"
   >
-    {% csrf_token %} {{form}}
+    {% csrf_token %} {{form.username.label}} {{form.username}}
+    {{form.password.label}} {{form.password}} {% if form.non_field_errors %}
+    {%for error in form.non_field_errors %}
+    <p class="text-danger">{{ error }}</p>
+    {% endfor %} {% endif %}
     <button type="submit" class="btn btn-success my-2">Login</button>
   </form>
 </main>

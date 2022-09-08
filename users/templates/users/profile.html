@@ -1,15 +1,25 @@
 {% extends "blog/base.html" %} {% block container %}
 <main class="container d-flex flex-column align-items-center py-3">
-  <h1>This is the profile page for {{user.username}}</h1>
-
-  <form
-    class="d-flex flex-column gap-2 p-3 my-3 border shadow-1 w-75"
-    enctype="multipart/form-data"
-    action=""
-    method="POST"
-  >
-    {% csrf_token %} {{form}}
-    <button type="submit" class="btn btn-outline-info my-2">Update</button>
-  </form>
+  <section class="d-flex flex-column gap-2 px-3 my-3 border shadow-1 w-75">
+    <div class="d-flex gap-5">
+      <figure><img src="" alt="" /></figure>
+      <div class="d-flex flex-column gap-2">
+        <h3 class="display-6">{{user.username}}</h3>
+        <p class="text-muted lead">{{user.email}}</p>
+      </div>
+    </div>
+    <form
+      class="d-flex flex-column gap-2 p-3 my-3 w-100"
+      enctype="multipart/form-data"
+      action=""
+      method="POST"
+    >
+      <h3>Profile</h3>
+      <hr />
+      {% csrf_token %} {{form1.username.label}} {{form1.username}}
+      {{form1.email.label}} {{form1.email}} {{form}}
+      <button type="submit" class="btn btn-outline-info my-2">Update</button>
+    </form>
+  </section>
 </main>
 {% endblock container %}

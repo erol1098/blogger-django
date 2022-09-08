@@ -15,7 +15,10 @@
     method="post"
     enctype="multipart/form-data"
   >
-    {% csrf_token %} {{ form}}
+    {% csrf_token %} {{ form.username.label}} {{ form.username}}
+    {{form.email.label}} {{ form.email}} {{ form.password1.label}}
+    {{form.password1}} {{ form.password2.label}} {{ form.password2}}
+
     <button type="submit" class="btn btn-primary my-2">Register</button>
   </form>
   {% endif %} {% endblock container %}
