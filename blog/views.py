@@ -1,9 +1,10 @@
+from xmlrpc.client import Boolean
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import  User
 
 from .forms import CommentForm, PostForm
-from .models import Post, PostView
+from .models import Post, PostView, Comment, Like
 # Create your views here.
 
 def post_list(request):
@@ -74,6 +75,10 @@ def post_detail(request,id):
   
   query = PostView.objects.filter(post=post)
   viewCount = len(query)
+  query = Comment.objects.filter(post=post)
+  commentCount = len(query)
+  query = Like.objects.filter(post=post)
+  likeCount = len(query)
 
   if request.method =="POST":
     form = CommentForm(request.POST)
@@ -86,6 +91,28 @@ def post_detail(request,id):
       return redirect(f"/detail/{id}")  
 
 
-  ctx = {"post":post,"form":form, "viewCount":viewCount}
+  ctx = {"post":post,"form":form, "viewCount":viewCount,"commentCount":commentCount,"likeCount":likeCount}
   
   return render(request, "blog/post_detail.html", ctx)
+
+
+def like_post(request,id):
+  user = User.objects.get(id=request.user.id)
+  post = Post.objects.get(id=id)
+
+  # if not Like.objects.get(user=user):
+  #   like = Like(post=post, liker=user)
+  #   like.save()
+  # else:
+  #   pass
+  print(len(Like.objects.all()))
+  
+
+  if Like.objects.filter(liker=user).count():
+    Like.objects.get(liker=user).delete()
+  else:
+    like = Like(post=post, liker=user)
+    like.save()
+
+  return redirect(f"/detail/{id}")
+

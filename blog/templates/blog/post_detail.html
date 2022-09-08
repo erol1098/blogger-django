@@ -13,12 +13,14 @@
 
       <div class="d-flex gap-4 align-items-center">
         <div class="{% if user.id != post.author.id %} invisible{% endif %}">
-          <a href="/update/{{post.id}}" class="btn btn-primary">Edit</a>
-          <a href="/delete/{{post.id}}" class="btn btn-danger">Delete</a>
+          <a href="{% url 'update' post.id %}" class="btn btn-primary">Edit</a>
+          <a href="{% url 'delete' post.id %}" class="btn btn-danger">Delete</a>
         </div>
-        <i class="fa-regular fa-heart fa-xl"></i>
+        <a href="{% url 'like' post.id %}"
+          ><i class="fa-regular fa-heart fa-xl">{{likeCount}}</i></a
+        >
         <i class="fa-solid fa-eye fa-xl">{{viewCount}}</i>
-        <i class="fa-regular fa-message fa-xl"></i>
+        <i class="fa-regular fa-message fa-xl">{{commentCount}}</i>
 
         <span>{{ post.publish_date|timesince }} ago</span>
       </div>
