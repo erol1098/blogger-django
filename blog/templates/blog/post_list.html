@@ -1,9 +1,10 @@
 {% extends "blog/base.html" %} {% load static %} {% block container%}
+<hr />
 <main
   class="d-flex flex-wrap justify-content-center align-items-center gap-5 my-5"
 >
-  {% if posts %} {% for post in posts%}
-  <section class="card" style="width: 25rem; height: 35rem">
+  {% if posts %} {% for post in posts%} {{view.value}}
+  <section class="card" style="width: 25rem; height: 40rem">
     <img src="{{post.image.url}}" class="card-img-top" alt="image" />
     <div class="card-body">
       <h5 class="card-title"><strong>{{post.title}}</strong></h5>
@@ -12,8 +13,8 @@
         <span><b>Category: </b> {{ post.category }}</span>
         <div class="d-flex justify-content-between align-items-center gap-4">
           <i class="fa-solid fa-eye fa-lg"></i>
-          <i class="fa-regular fa-heart fa-lg"></i>
-          <i class="fa-regular fa-message fa-lg"></i>
+          <i class="fa-regular fa-heart fa-lg">{{likeCount|length}}</i>
+          <i class="fa-regular fa-message fa-lg">{{commentCount|length}}</i>
         </div>
       </div>
       <hr />

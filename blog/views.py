@@ -9,10 +9,14 @@ from .models import Post, PostView, Comment, Like
 
 def post_list(request):
   posts = Post.objects.all()
-
-  ctx = {"posts":posts}
+  viewCount  = PostView.objects.all()
+  commentCount = Comment.objects.all()
+  likeCount =Like.objects.all()
+   
+  ctx = {"posts":posts, "viewCount":viewCount,"commentCount":commentCount,"likeCount":likeCount}
 
   return render(request, "blog/post_list.html", ctx)
+
 
 @login_required(login_url='/user/login/')
 def post_create(request):
@@ -95,18 +99,10 @@ def post_detail(request,id):
   
   return render(request, "blog/post_detail.html", ctx)
 
-
+@login_required(login_url='/user/login/')
 def like_post(request,id):
   user = User.objects.get(id=request.user.id)
   post = Post.objects.get(id=id)
-
-  # if not Like.objects.get(user=user):
-  #   like = Like(post=post, liker=user)
-  #   like.save()
-  # else:
-  #   pass
-  print(len(Like.objects.all()))
-  
 
   if Like.objects.filter(liker=user).count():
     Like.objects.get(liker=user).delete()
