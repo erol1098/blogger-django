@@ -1,11 +1,13 @@
 from django.shortcuts import render,redirect
-from django.contrib.auth.forms import AuthenticationForm 
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-
-from users.forms import CreateUserForm, ProfileForm, UpdateUserProfileForm
-
+from django.contrib.auth.models import User
 from django.contrib import messages
+
+
+from .forms import CreateUserForm, ProfileForm, UpdateUserProfileForm
+from .models import Profile
 # Create your views here.
 
 def user_login(request):
@@ -37,7 +39,10 @@ def register(request):
           
             user = authenticate(username=username, password=password)
             
-        
+            profile = Profile()
+            profile.user = user
+            profile.save()
+
             login(request, user)
          
             return redirect('index')
@@ -59,22 +64,32 @@ def user_logout(request):
     return render(request, "users/logout.html")
 
 @login_required(login_url='/user/login/') 
-def profile(request):
-    user = request.user
-    profileForm = ProfileForm(instance=user)
+def profile_page(request,id):
+    user = User.objects.get(id=id)
+    profile = Profile.objects.get(user=user)
+
+    profileForm = ProfileForm(instance=profile)
     form = UpdateUserProfileForm(instance=user)
 
     if request.method == "POST":
-        profileForm = ProfileForm(request.POST, request.FILES,instance=user)
+        profileForm = ProfileForm(request.POST, request.FILES,instance=profile)
         form = UpdateUserProfileForm(request.POST, request.FILES,instance=user)
 
         if profileForm.is_valid():
-            profile1 = profileForm.save(commit=False)
-            profile1.user = user
+
+            
+           
+            avatar = profileForm.cleaned_data['avatar']
+            bio = profileForm.cleaned_data['bio']
+
+            profile.bio = bio
+            profile.avatar = avatar
+            profile.save()
+            
             if form.is_valid():
                 form.save()
-                return redirect("/user/profile")
+                return redirect(f"/user/profile/{id}")
 
-    ctx = {"form":profileForm, "form1":form}
+    ctx = {"form":profileForm, "form1":form, "profile":profile}
     
     return render(request, "users/profile.html", ctx)
