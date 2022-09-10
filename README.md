@@ -65,5 +65,5 @@ $ git clone https://github.com/your-user-name/your-project-name
 
 ## Contact
 
-- GitHub [erol1098](https://{github.com/erol1098})
-- Linkedin [Erol Mahmutoglu](https://{linkedin.com/erol-mahmutoglu})
+- GitHub [erol1098](https://github.com/erol1098)
+- Linkedin [Erol Mahmutoglu](https://www.linkedin.com/in/erol-mahmutoglu/)
