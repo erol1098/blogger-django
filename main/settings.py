@@ -15,7 +15,6 @@ import os
 from decouple import config
 import django_heroku
 
-django_heroku.settings(locals())
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -49,8 +48,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -142,3 +141,5 @@ LOGIN_REDIRECT_URL = "index"
 LOGOUT_REDIRECT_URL = "index" 
 
 STATICFILES_STORAGE ='whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+django_heroku.settings(locals())
